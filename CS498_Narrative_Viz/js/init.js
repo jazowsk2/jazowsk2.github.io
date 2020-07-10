@@ -1,6 +1,6 @@
 async function init() {
 const data = await d3.csv(
-"../data/LA_County_Covid19_cases_deaths_date_table.csv").then(function(d) {console.log(d[0])});
+"https://jazowsk2.github.io/CS498_Narrative_Viz/data/LA_County_Covid19_cases_deaths_date_table.csv").then(function(d) {console.log(d[0])});
 var plot_width = 1000;
 var plot_height = 1000;
 var xs = d3.scaleLinear().domain([1,124]).range([0,plot_width]);
