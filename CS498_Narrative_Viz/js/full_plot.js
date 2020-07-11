@@ -1,20 +1,7 @@
-async function init() {
-	var data_index = [];
-	data = await d3.csv(
-	'https://jazowsk2.github.io/CS498_Narrative_Viz/data/LA_County_Covid19_cases_deaths_date_table.csv');
-
-	// convert strings to int
-	data.forEach(function(d) {
-			d.index = +d.index;
-			d.date_use = d3.timeParse("%m/%d/%Y")(d.date_use);
-			d.total_cases = +d.total_cases;
-			d.new_case = +d.new_case;
-			d.avg_cases = +d.avg_cases;
-			d.total_deaths = +d.total_deaths;
-			d.new_deaths = +d.new_deaths;
-			d.avg_deaths = +d.avg_deaths;
-			data_index = data_index.concat(d.index);
-		});	
+function full_plot() {
+	
+	// clear the svg plot
+	svg.selectAll('*').remove();
 	
 	// add the bar graph
 	var case_max = Math.max.apply(Math,data.map(function(o) {return o.new_case}));

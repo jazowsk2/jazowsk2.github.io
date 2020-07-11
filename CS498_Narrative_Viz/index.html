@@ -1,5 +1,9 @@
 <!DOCTYPE html>
 <html>
+<head>
+
+	<link rel="stylesheet" type="text/css" href="css/button.css" />
+</head>
 <body>
 	<div id="main_page" style="border: 1px solid black">
 		<h1>Investigating Los Angeles County Covid-19 Response</h1>
@@ -8,8 +12,15 @@
 		<script src='https://d3js.org/d3.v5.min.js'></script>
 		<style> rect {fill: lightblue; stroke: black; }</style>
 		<body onload="init()">
+			<button type="button" onclick="full_plot()">1</button>
+			<button type="button">2</button>
+			<button type="button">3</button>
+			<button type="button">4</button>
+			<button type="button">Next</button>
 			<svg width=900 height=700> </svg>
-			<script type="text/javascript" src="js/init.js"></script>
+			<script type="text/javascript" src="js/globals.js"></script>
+			<script type="text/javascript" src="js/overview_plot.js"></script>
+			<script type="text/javascript" src="js/full_plot.js"></script>
 		</body>
 	</div>
 </body>
