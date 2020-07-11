@@ -1,8 +1,8 @@
 async function init() {
 
 	// set the dimensions and margins of the graph
-	var margin = {top: 10, right: 50, bottom: 50, left: 50},
-		width = 800 - margin.left - margin.right,
+	var margin = {top: 10, right: 200, bottom: 50, left: 50},
+		width = 950 - margin.left - margin.right,
 		height = 700 - margin.top - margin.bottom;
 
 	// append the svg object to the body of the page
@@ -83,5 +83,39 @@ async function init() {
 		.call(d3.axisRight(ys2).tickValues([0,15,30,death_max]).tickFormat(d3.format("~s")));
 		
 	// add a legend
-	
+	var keys = ["Daily New Cases", "7-Day Average New Cases", "7-Day Average Deaths"];
+
+	// Usually you have a color scale in your chart already
+	var color = d3.scaleOrdinal()
+	  .domain(keys)
+	  .range(["lightblue","black","green"]);
+
+	// Add one dot in the legend for each name.
+	var size = 15;
+	var legend_offset = 10;
+	svg.append("g")
+		.attr("transform","translate("+width+",0)")
+		.selectAll("mydots")
+		.data(keys)
+		.enter()
+		.append("rect")
+		.attr("x",legend_offset)
+		.attr("y", function(d,i){ return legend_offset + i*(size+5)}) // 100 is where the first dot appears. 25 is the distance between dots
+		.attr("width", size)
+		.attr("height", size)
+		.style("fill", function(d){ return color(d)});
+
+	// Add one dot in the legend for each name.
+	svg.append("g")
+		.attr("transform","translate("+width+",0)")
+		.selectAll("mylabels")
+		.data(keys)
+		.enter()
+		.append("text")
+		.attr("x", legend_offset + size*1.2)
+		.attr("y", function(d,i){ return legend_offset + i*(size+5) + (size/2)}) // 100 is where the first dot appears. 25 is the distance between dots
+		.style("fill", "black")
+		.text(function(d){ return d})
+		.attr("text-anchor", "left")
+		.style("alignment-baseline", "middle")	;
 }
