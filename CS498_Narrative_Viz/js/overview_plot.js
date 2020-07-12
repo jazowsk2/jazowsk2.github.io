@@ -17,11 +17,15 @@ async function init() {
 	
 	// set state machine to slide 1
 	state_machine(1);
-	slide_num = 1;
 }
 
 // function that plots the overview
 function overview_plot() {
+	// change the header text
+	d3.select("h2").text("Continuous Growth");
+	document.getElementById("sub_text").innerText = "The number of cases and deaths \
+		has been increasing steadily since the beginning of the Covid-19 outbreak."
+	
 	// plot the overview slide which shows cumulative cases and deaths	  
 	// add the cumulative cases
 	var case_max = Math.max.apply(Math,data.map(function(o) {return o.total_cases}));
@@ -41,7 +45,7 @@ function overview_plot() {
 
 	// Add cases axis
 	svg.append("g")
-		.call(d3.axisLeft(ys).tickValues(getTicks(0,case_max)).tickFormat(d3.format("~s")));
+		.call(d3.axisLeft(ys).tickValues(getTicks(0,case_max,5)).tickFormat(d3.format("~s")));
 	// Add X axis --> it is a date format
     var x = d3.scaleTime()
       .domain(d3.extent(data, function(d) { return d.date_use; }))
@@ -65,7 +69,7 @@ function overview_plot() {
 		
 		// add deaths axis
 	svg.append("g").attr("transform","translate("+width+",0)")
-		.call(d3.axisRight(ys2).tickValues(getTicks(0,death_max)).tickFormat(d3.format("~s")));
+		.call(d3.axisRight(ys2).tickValues(getTicks(0,death_max,5)).tickFormat(d3.format("~s")));
 		
 	// add a legend
 	var keys = ["Total Cases", "Total Deaths"];
@@ -109,11 +113,14 @@ function overview_plot() {
 // function that returns evenly spaced tick values 
 // between min and max, and amount cnt
 function getTicks(min,max,cnt) {
-	var chnk = (max - min)/cnt;
+	var chnk = Math.round((max - min)/cnt);
 	var array = [];
 	var val = min;
 	for (i = 0; i < cnt; i++) {
 		array.push(val);
 		val += chnk;
 	}
+	// add max value as last item
+	array.push(max);
+	return array;
 }

@@ -1,4 +1,9 @@
 function plot3() {
+	// change the header text
+	d3.select("h2").text("The Plateau");
+	document.getElementById("sub_text").innerText = "The stay at home order proved effective, and once cases peaked \
+	and started to plateau, discussions about reopening began.";
+	
 	// add the bar graph
 	var case_max = Math.max.apply(Math,data.map(function(o) {return o.new_case}));
 	var xs = d3.scaleBand().domain(data_index).range([0,width]);
@@ -11,7 +16,7 @@ function plot3() {
 		
 	// Add cases axis
 	svg.append("g")
-		.call(d3.axisLeft(ys).tickValues([0,1000,2000,case_max]).tickFormat(d3.format("~s")));
+		.call(d3.axisLeft(ys).tickValues(getTicks(0,case_max,5)).tickFormat(d3.format("~s")));
 	  
 	// Add the cases line
     svg.append("path")
@@ -48,7 +53,7 @@ function plot3() {
 		
 	// add deaths axis
 	svg.append("g").attr("transform","translate("+width+",0)")
-		.call(d3.axisRight(ys2).tickValues([0,15,30,death_max]).tickFormat(d3.format("~s")));
+		.call(d3.axisRight(ys2).tickValues(getTicks(0,death_max,5)).tickFormat(d3.format("~s")));
 	
 	// add a legend
 	var keys = ["7-Day Average New Cases", "7-Day Average Deaths","Daily New Cases", ];
@@ -84,5 +89,5 @@ function plot3() {
 		.style("fill", "black")
 		.text(function(d){ return d})
 		.attr("text-anchor", "left")
-		.style("alignment-baseline", "middle")	;
+		.style("alignment-baseline", "middle");
 }

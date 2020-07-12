@@ -1,0 +1,14 @@
+#main_page #text {
+  position: absolute;
+  top: 150px;
+  left: 10px;
+  width: 130px;
+  height: 100px;
+}
+#main_page #sub_page {
+  position: absolute;
+  top: 150px;
+  left: 160px;
+  width: 1400px;
+  height: 600px;
+}

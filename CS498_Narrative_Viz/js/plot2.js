@@ -1,4 +1,9 @@
 function plot2() {
+	// change the header text
+	d3.select("h2").text("The Beginning");
+	document.getElementById("sub_text").innerText = "As new cases and deaths began to grow \
+		without any hope of stopping the spread, LA county officials enacted a stay at home order.";
+		
 	// add the bar graph
 	var case_max = Math.max.apply(Math,data.map(function(o) {return o.new_case}));
 	var xs = d3.scaleBand().domain(data_index).range([0,width]);
@@ -11,7 +16,7 @@ function plot2() {
 		
 	// Add cases axis
 	svg.append("g")
-		.call(d3.axisLeft(ys).tickValues([0,1000,2000,case_max]).tickFormat(d3.format("~s")));
+		.call(d3.axisLeft(ys).tickValues(getTicks(0,case_max,5)).tickFormat(d3.format("~s")));
 	  
 	// Add the cases line
     svg.append("path")
@@ -48,7 +53,7 @@ function plot2() {
 		
 	// add deaths axis
 	svg.append("g").attr("transform","translate("+width+",0)")
-		.call(d3.axisRight(ys2).tickValues([0,15,30,death_max]).tickFormat(d3.format("~s")));
+		.call(d3.axisRight(ys2).tickValues(getTicks(0,death_max,5)).tickFormat(d3.format("~s")));
 	
 	// add a legend
 	var keys = ["7-Day Average New Cases", "7-Day Average Deaths","Daily New Cases", ];
@@ -84,5 +89,5 @@ function plot2() {
 		.style("fill", "black")
 		.text(function(d){ return d})
 		.attr("text-anchor", "left")
-		.style("alignment-baseline", "middle")	;
+		.style("alignment-baseline", "middle");
 }

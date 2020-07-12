@@ -7,8 +7,8 @@ var legend_offset = 30; // how much to offset the legend
 	
 // set the svg only once and specify the margins
 // set the dimensions and margins of the graph
-var margin = {top: 30, right: 200, bottom: 50, left: 50},
-	width = 1200 - margin.left - margin.right,
+var margin = {top: 30, right: 250, bottom: 50, left: 50},
+	width = 1300 - margin.left - margin.right,
 	height = 500 - margin.top - margin.bottom;
 
 // append the svg object to the body of the page
