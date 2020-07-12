@@ -1,7 +1,10 @@
 // this file contains global variables for the page
 var data; // only load the data once
 var slide_num = 0; // parameter to change between slides
-var data_index = [];
+var num_slides = 5; // set the number of slides
+var data_index = []; // array used to store data indexs from file
+var legend_offset = 30; // how much to offset the legend
+	
 // set the svg only once and specify the margins
 // set the dimensions and margins of the graph
 var margin = {top: 30, right: 200, bottom: 50, left: 50},

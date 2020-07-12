@@ -1,4 +1,4 @@
-function full_plot() {
+function plot2() {
 	// add the bar graph
 	var case_max = Math.max.apply(Math,data.map(function(o) {return o.new_case}));
 	var xs = d3.scaleBand().domain(data_index).range([0,width]);

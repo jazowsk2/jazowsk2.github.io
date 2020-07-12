@@ -14,7 +14,14 @@ async function init() {
 			d.avg_deaths = +d.avg_deaths;
 			data_index = data_index.concat(d.index);
 		});	
-		
+	
+	// set state machine to slide 1
+	state_machine(1);
+	slide_num = 1;
+}
+
+// function that plots the overview
+function overview_plot() {
 	// plot the overview slide which shows cumulative cases and deaths	  
 	// add the cumulative cases
 	var case_max = Math.max.apply(Math,data.map(function(o) {return o.total_cases}));
@@ -70,7 +77,6 @@ async function init() {
 
 	// Add one dot in the legend for each name.
 	var size = 15;
-	var legend_offset = 10;
 	svg.append("g")
 		.attr("transform","translate("+width+",0)")
 		.selectAll("mydots")
@@ -96,8 +102,10 @@ async function init() {
 		.text(function(d){ return d})
 		.attr("text-anchor", "left")
 		.style("alignment-baseline", "middle")	;
-}
 
+
+
+}
 // function that returns evenly spaced tick values 
 // between min and max, and amount cnt
 function getTicks(min,max,cnt) {

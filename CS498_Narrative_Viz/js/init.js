@@ -1,4 +1,7 @@
 async function init() {
+	// set slide number parameter
+	slide_num = 1;
+	
 	var data_index = [];
 	data = await d3.csv(
 	'https://jazowsk2.github.io/CS498_Narrative_Viz/data/LA_County_Covid19_cases_deaths_date_table.csv');
