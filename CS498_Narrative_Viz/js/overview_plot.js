@@ -15,16 +15,15 @@ async function init() {
 			data_index = data_index.concat(d.index);
 		});	
 	
-	// set state machine to slide 1
-	state_machine(1);
+	// set state machine to slide 0
+	state_machine(0);
 }
 
 // function that plots the overview
 function overview_plot() {
 	// change the header text
-	d3.select("h2").text("Continuous Growth");
-	document.getElementById("sub_text").innerText = "The total number of cases and deaths \
-		has been increasing steadily since the beginning of the Covid-19 outbreak."
+	d3.select("h2").text(header[0]);
+	document.getElementById("sub_text").innerText = text[0];
 	
 	// plot the overview slide which shows cumulative cases and deaths	  
 	// add the cumulative cases
