@@ -6,33 +6,37 @@
 </head>
 <body>
 	<div id="main_page">
-		<h1>Investigating Los Angeles County Covid-19 Response</h1>
-		<p>Beginning in March 2020, LA county began collecting statistics on new cases and deaths related to Covid-19.
-			This is an investigation into the effectiveness of the decisions LA county officials made to close down and reopen.</p>
 		<script src='https://d3js.org/d3.v5.min.js'></script>
-		<style> rect {fill: lightblue; stroke: black; }</style>
-		<body onload="init()">
-			<button type="button" id="button_1" onclick="state_machine(1)">1</button>
-			<button type="button" id="button_2" onclick="state_machine(2)">2</button>
-			<button type="button" id="button_3" onclick="state_machine(3)">3</button>
-			<button type="button" id="button_4" onclick="state_machine(4)">4</button>
-			<button type="button" id="button_5" onclick="state_machine(5)">5</button>
-			<button type="button" id="next_button" onclick="increment_slide_num()">Next</button>
-			<div id="text">
-				<h2> </h2>
-				<p id="sub_text"> </p>
-			</div>
-			<div id="sub_page" >
-				<svg width=900 height=700> </svg>
-				<script type="text/javascript" src="js/globals.js"></script>
-				<script type="text/javascript" src="js/overview_plot.js"></script>
-				<script type="text/javascript" src="js/plot2.js"></script>
-				<script type="text/javascript" src="js/plot3.js"></script>
-				<script type="text/javascript" src="js/plot4.js"></script>
-				<script type="text/javascript" src="js/full_plot.js"></script>
-				<script type="text/javascript" src="js/state_machine.js"></script>
-			</div>
-		</body>
+		<div id="title-description">
+			<h1 id ="title">Investigating Los Angeles County Covid-19 Response</h1>
+			<p id="description">Beginning in March 2020, LA county began collecting statistics on new cases and deaths related to Covid-19.
+				This is an investigation into the effectiveness of the decisions LA county officials made to close down and reopen.</p>
+		</div>
+		<div id="plot-and-description">
+			<body onload="init()">
+				<button type="button" id="button_1" onclick="state_machine(1)">1</button>
+				<button type="button" id="button_2" onclick="state_machine(2)">2</button>
+				<button type="button" id="button_3" onclick="state_machine(3)">3</button>
+				<button type="button" id="button_4" onclick="state_machine(4)">4</button>
+				<button type="button" id="button_5" onclick="state_machine(5)">5</button>
+				<button type="button" id="next_button" onclick="increment_slide_num()">Next</button>
+				<div id="text">
+					<h2> </h2>
+					<p id="sub_text"> </p>
+				</div>
+				<div id="sub_page" >
+					<style> rect {fill: lightblue; stroke: black; }</style>
+					<svg width=900 height=700> </svg>
+					<script type="text/javascript" src="js/globals.js"></script>
+					<script type="text/javascript" src="js/overview_plot.js"></script>
+					<script type="text/javascript" src="js/plot2.js"></script>
+					<script type="text/javascript" src="js/plot3.js"></script>
+					<script type="text/javascript" src="js/plot4.js"></script>
+					<script type="text/javascript" src="js/full_plot.js"></script>
+					<script type="text/javascript" src="js/state_machine.js"></script>
+				</div>
+			</body>
+		</div>
 	</div>
 </body>
 </html>

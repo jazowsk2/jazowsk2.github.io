@@ -1,14 +1,26 @@
-#main_page #text {
+#main_page #title-description {
   position: absolute;
-  top: 150px;
+  top: 0px;
   left: 10px;
-  width: 130px;
+  width: 1000px;
   height: 100px;
 }
-#main_page #sub_page {
+#main_page #plot-and-description {
   position: absolute;
-  top: 150px;
-  left: 160px;
+  top: 130px;
+  left: 10px;
   width: 1400px;
   height: 600px;
+}
+#main_page #plot-and-description #text {
+  position: relative;
+  top: 0px;
+  left: 5px;
+  width: 150px;
+  margin-right:0px;
+}
+#main_page #plot-and-description #sub_page {
+  position: absolute;
+  top: 20px;
+  left: 160px;
 }

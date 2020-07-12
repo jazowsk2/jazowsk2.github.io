@@ -23,7 +23,7 @@ async function init() {
 function overview_plot() {
 	// change the header text
 	d3.select("h2").text("Continuous Growth");
-	document.getElementById("sub_text").innerText = "The number of cases and deaths \
+	document.getElementById("sub_text").innerText = "The total number of cases and deaths \
 		has been increasing steadily since the beginning of the Covid-19 outbreak."
 	
 	// plot the overview slide which shows cumulative cases and deaths	  
