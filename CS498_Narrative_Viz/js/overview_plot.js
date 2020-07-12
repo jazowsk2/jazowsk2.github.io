@@ -106,8 +106,34 @@ function overview_plot() {
 		.attr("text-anchor", "left")
 		.style("alignment-baseline", "middle")	;
 
+	// Add axis labels
+	svg.append("text")      // text label for the x axis
+        .attr("x", width/2 )
+        .attr("y",  height + margin.bottom)
+        .style("text-anchor", "middle")
+		.attr("font-size", "18px")
+        .style("text-anchor", "middle")		
+        .text("Date");
 
-
+	svg.append("text")
+        .attr("transform", "rotate(-90)")
+        .attr("y", 0 - margin.left)
+        .attr("x",0 - (height / 2))
+        .attr("dy", "1em")
+		.attr("font-family", "serif")
+        .attr("font-size", "18px")
+        .style("text-anchor", "middle")
+        .text("Cumulative cases");
+		
+	svg.append("text")
+        .attr("transform", "rotate(-90)")
+        .attr("y", width + legend_offset)
+        .attr("x",0 - (height / 2))
+        .attr("dy", "1em")
+		.attr("font-family", "serif")
+        .attr("font-size", "18px")
+        .style("text-anchor", "middle")
+        .text("Cumulative deaths");
 }
 // function that returns evenly spaced tick values 
 // between min and max, and amount cnt

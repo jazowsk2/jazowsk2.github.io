@@ -22,11 +22,11 @@ function transition_plot(slide_idx) {
 	// plot the new data with transition
 	svg.append("g")
 		.selectAll("rect").data(data2).enter().append("rect")
-		.attr("x",xs(data2[0].index))
-		.attr("height",height - ys(data2[0].new_case))
+		.attr("x",function (d,i) {return xs(d.index);})
+		.attr("height",height - ys(0))
 		.attr("width",xs.bandwidth())
-		.attr("y",ys(data2[0].new_case))
-		.transition().duration(2000)
+		.attr("y",function(d,i) {return ys(0);})
+		.transition().delay(function(d,i) {return i*(1500/data2.length);})
 		.attr("x",function (d,i) {return xs(d.index);})
 		.attr("height",function(d,i) {return height - ys(d.new_case);})
 		.attr("y",function(d,i) {return ys(d.new_case);});
@@ -53,7 +53,7 @@ function transition_plot(slide_idx) {
         .attr("stroke", "black")
         .attr("stroke-width", 1.5)
         .attr("d", d3.line()
-			.x(data2[0].index)
+			.x(xs(data2[0].index))
 			.y(ys(data2[0].avg_cases))
         )
 		.transition().duration(2000)
@@ -91,7 +91,7 @@ function transition_plot(slide_idx) {
       .attr("stroke", "green")
       .attr("stroke-width", 1.5)
 	  .attr("d", d3.line()
-        .x(data2[0].index) 
+        .x(xs(data2[0].index)) 
         .y(ys2(data2[0].avg_deaths))
         )
 	  .transition().duration(2000)
@@ -139,6 +139,35 @@ function transition_plot(slide_idx) {
 		.text(function(d){ return d})
 		.attr("text-anchor", "left")
 		.style("alignment-baseline", "middle");
+		
+	// Add axis labels
+	svg.append("text")      // text label for the x axis
+        .attr("x", width/2 )
+        .attr("y",  height + margin.bottom)
+        .style("text-anchor", "middle")
+		.attr("font-family", "serif")
+        .attr("font-size", "18px")
+        .text("Date");
+		
+	svg.append("text")
+        .attr("transform", "rotate(-90)")
+        .attr("y", 0 - margin.left)
+        .attr("x",0 - (height / 2))
+        .attr("dy", "1em")
+		.attr("font-family", "serif")
+        .attr("font-size", "18px")
+        .style("text-anchor", "middle")
+        .text("Daily New Cases");
+		
+	svg.append("text")
+        .attr("transform", "rotate(-90)")
+        .attr("y", width + legend_offset)
+        .attr("x",0 - (height / 2))
+        .attr("dy", "1em")
+		.attr("font-family", "serif")
+        .attr("font-size", "18px")
+        .style("text-anchor", "middle")
+        .text("New Deaths");		
 }
 
 // function that extracts data between two points

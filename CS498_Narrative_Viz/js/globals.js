@@ -3,11 +3,11 @@ var data; // only load the data once
 var slide_num = -1; // parameter to change between slides
 var num_slides = 5; // set the number of slides
 var data_index = []; // array used to store data indexs from file
-var legend_offset = 30; // how much to offset the legend
+var legend_offset = 40; // how much to offset the legend
 	
 // set the svg only once and specify the margins
 // set the dimensions and margins of the graph
-var margin = {top: 30, right: 250, bottom: 50, left: 50},
+var margin = {top: 30, right: 250, bottom: 50, left: 75},
 	width = 1200 - margin.left - margin.right,
 	height = 500 - margin.top - margin.bottom;
 
