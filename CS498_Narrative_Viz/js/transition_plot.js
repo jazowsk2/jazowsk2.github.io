@@ -167,7 +167,37 @@ function transition_plot(slide_idx) {
 		.attr("font-family", "serif")
         .attr("font-size", "18px")
         .style("text-anchor", "middle")
-        .text("New Deaths");		
+        .text("New Deaths");	
+
+	// Add annotation to the chart
+	for (var i = 1; i < slide_idx + 1;i++) {
+		if (i < 4) {
+			var temp_data = extractData(dates[i],dates[i]);
+			// get the x location of our three annotations
+			var x_loc = xs(temp_data[0].index);
+			var y_loc = ys(temp_data[0].avg_cases);
+
+			// annotation text
+			svg.append("text") 
+				.attr("x", x_loc )
+				.attr("y",  y_loc - annotations[i-1].y)
+				.style("text-anchor", "middle")
+				.attr("font-family", "serif")
+				.attr("font-size", "14px")
+				.text(annotations[i-1].label);
+			// path	
+			var lineFunction = d3.line()
+				 .x(function(d) { return d.x; })
+				 .y(function(d) { return d.y; });
+			
+			var endpoints = [{x:x_loc,y:height},{x:x_loc,y: y_loc - annotations[i-1].y + 10}	];
+			svg.append("path")
+				.attr("d", lineFunction(endpoints))
+				.attr("stroke", "black")
+				.attr("stroke-width", 1)
+				.attr("fill", "none");
+		}
+	}	
 }
 
 // function that extracts data between two points

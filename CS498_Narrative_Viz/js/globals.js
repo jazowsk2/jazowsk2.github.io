@@ -40,4 +40,9 @@ var text = ["The total number of cases and deaths \
 			"Although cases have been increasing since reopening, deaths have continued \
 			to decrease meaning the current reopening strategy is mostly successful. However, LA county officials need to continue \
 			closely monitoring the situation to maintain control of spread and prevent an increase in deaths."];
+
+// annotation label and y offset
+var annotations = [{label: "Stay at home order", y: 100},
+					{label: "New Cases Peak and Plateau", y: 100},
+					{label: "Beginning of reopening", y: 150}];
 		
