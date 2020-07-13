@@ -18,7 +18,14 @@ function transition_plot(slide_idx) {
 		.attr("x",function (d,i) {return xs(d.index);})
 		.attr("height",function(d,i) {return height - ys(d.new_case);})
 		.attr("width",xs.bandwidth())
-		.attr("y",function(d,i) {return ys(d.new_case);});
+		.attr("y",function(d,i) {return ys(d.new_case);})
+        .on("mouseover", function(d) {
+			tooltip_div.style("opacity", 1)
+			.text( "Date: " + dataFormatter(d.date_use) + "\nDaily Cases: " + d.new_case )
+			.style("left", (d3.event.pageX + 10) + "px")            
+			.style("top", (d3.event.pageY - 28) + "px")}
+			)
+		.on("mouseout", function(d) {tooltip_div.style("opacity",0);});
 	// plot the new data with transition
 	svg.append("g")
 		.selectAll("rect").data(data2).enter().append("rect")
@@ -29,8 +36,7 @@ function transition_plot(slide_idx) {
 		.transition().delay(function(d,i) {return i*(1500/data2.length);})
 		.attr("x",function (d,i) {return xs(d.index);})
 		.attr("height",function(d,i) {return height - ys(d.new_case);})
-		.attr("y",function(d,i) {return ys(d.new_case);});
-		
+		.attr("y",function(d,i) {return ys(d.new_case);});	
 	// Add cases axis
 	svg.append("g")
 		.call(d3.axisLeft(ys).tickValues(getTicks(0,case_max,5)).tickFormat(d3.format("~s")));
@@ -46,6 +52,23 @@ function transition_plot(slide_idx) {
 			.x(function(d,i) {return xs(d.index);})
 			.y(function(d,i) {return ys(d.avg_cases);})
         );
+	// Add the scatterplot
+    svg.selectAll("dot")	
+        .data(data1)			
+    .enter().append("circle")								
+        .attr("r", 5)		
+        .attr("cx", function(d) { return xs(d.index); })		 
+        .attr("cy", function(d) { return ys(d.avg_cases); })	
+		.attr("fill-opacity",0)
+		.attr("stroke","black")
+        .on("mouseover", function(d) {
+			tooltip_div.style("opacity", 1)
+			.text( "Date: " + dataFormatter(d.date_use) + "\nDaily Avg Cases: " + d.avg_cases )
+			.style("left", (d3.event.pageX + 10) + "px")            
+			.style("top", (d3.event.pageY - 28) + "px")}
+			)
+		.on("mouseout", function(d) {tooltip_div.style("opacity",0);});
+		
 	// plot new data with transition
     svg.append("path")
 		.datum(data2)
@@ -62,6 +85,23 @@ function transition_plot(slide_idx) {
 			.y(function(d,i) {return ys(d.avg_cases); })
         );
 
+	// Add the scatterplot
+    svg.selectAll("dot")	
+        .data(data2)			
+    .enter().append("circle")								
+        .attr("r", 5)		
+        .attr("cx", function(d) { return xs(d.index); })		 
+        .attr("cy", function(d) { return ys(d.avg_cases); })	
+		.attr("fill-opacity",0)
+		.attr("stroke","black")
+        .on("mouseover", function(d) {
+			tooltip_div.style("opacity", 1)
+			.text( "Date: " + dataFormatter(d.date_use) + "\nDaily Avg Cases: " + d.avg_cases )
+			.style("left", (d3.event.pageX + 10) + "px")            
+			.style("top", (d3.event.pageY - 28) + "px")}
+			)
+		.on("mouseout", function(d) {tooltip_div.style("opacity",0);});
+		
 	// Add X axis --> it is a date format
     var x = d3.scaleTime()
       .domain(d3.extent(data, function(d) { return d.date_use; }))
@@ -84,6 +124,23 @@ function transition_plot(slide_idx) {
         .x(function(d,i) {return xs(d.index) }) 
         .y(function(d,i) {return ys2(d.avg_deaths) })
         );
+	// Add the scatterplot
+    svg.selectAll("dot")	
+        .data(data1)			
+    .enter().append("circle")								
+        .attr("r", 5)		
+        .attr("cx", function(d) { return xs(d.index); })		 
+        .attr("cy", function(d) { return ys2(d.avg_deaths); })	
+		.attr("fill-opacity",0)
+		.attr("stroke","green")
+        .on("mouseover", function(d) {
+			tooltip_div.style("opacity", 1)
+			.text( "Date: " + dataFormatter(d.date_use) + "\nDaily Avg Deaths: " + d.avg_deaths )
+			.style("left", (d3.event.pageX + 10) + "px")            
+			.style("top", (d3.event.pageY - 28) + "px")}
+			)
+		.on("mouseout", function(d) {tooltip_div.style("opacity",0);});
+		
 	// plot new data with transition
     svg.append("path")
       .datum(data2)
@@ -99,6 +156,22 @@ function transition_plot(slide_idx) {
         .x(function(d,i) {return xs(d.index) }) 
         .y(function(d,i) {return ys2(d.avg_deaths) })
         );	
+		
+    svg.selectAll("dot")	
+        .data(data2)			
+    .enter().append("circle")								
+        .attr("r", 5)		
+        .attr("cx", function(d) { return xs(d.index); })		 
+        .attr("cy", function(d) { return ys2(d.avg_deaths); })	
+		.attr("fill-opacity",0)
+		.attr("stroke","green")
+        .on("mouseover", function(d) {
+			tooltip_div.style("opacity", 1)
+			.text( "Date: " + dataFormatter(d.date_use) + "\nDaily Avg Deaths: " + d.avg_deaths )
+			.style("left", (d3.event.pageX + 10) + "px")            
+			.style("top", (d3.event.pageY - 28) + "px")}
+			)
+		.on("mouseout", function(d) {tooltip_div.style("opacity",0);});
 		
 	// add deaths axis
 	svg.append("g").attr("transform","translate("+width+",0)")
@@ -193,6 +266,7 @@ function transition_plot(slide_idx) {
 			var endpoints = [{x:x_loc,y:height},{x:x_loc,y: y_loc - annotations[i-1].y + 10}	];
 			svg.append("path")
 				.attr("d", lineFunction(endpoints))
+				.style("stroke-dasharray", ("3, 3"))
 				.attr("stroke", "black")
 				.attr("stroke-width", 1)
 				.attr("fill", "none");
@@ -221,6 +295,7 @@ function extractData(start_date,end_date) {
 				temp_object.total_deaths = d.total_deaths;
 				temp_object.new_deaths = d.new_deaths;
 				temp_object.avg_deaths = d.avg_deaths;
+				temp_object.date_use = d.date_use;
 				temp_data.push(temp_object);
 			}
 			

@@ -33,14 +33,31 @@ function overview_plot() {
 	var ys = d3.scaleLinear().domain([0,case_max]).range([height,0]);
 	// Add the cases line
     svg.append("path")
-      .datum(data)
-      .attr("fill", "none")
-      .attr("stroke", "black")
-      .attr("stroke-width", 1.5)
-      .attr("d", d3.line()
-        .x(function(d) { return xs(d.index) })
-        .y(function(d) { return ys(d.total_cases) })
-        );
+	.datum(data)
+	.attr("fill", "none")
+	.attr("stroke", "black")
+	.attr("stroke-width", 1.5)
+	.attr("d", d3.line()
+		.x(function(d) { return xs(d.index) })
+		.y(function(d) { return ys(d.total_cases) })
+		)
+
+	// Add the scatterplot
+    svg.selectAll("dot")	
+        .data(data)			
+    .enter().append("circle")								
+        .attr("r", 5)		
+        .attr("cx", function(d) { return xs(d.index); })		 
+        .attr("cy", function(d) { return ys(d.total_cases); })	
+		.attr("fill-opacity",0)
+		.attr("stroke","black")
+        .on("mouseover", function(d) {
+			tooltip_div.style("opacity", 1)
+			.text( "Date: " + dataFormatter(d.date_use) + "\nTotal Cases: " + d.total_cases )
+			.style("left", (d3.event.pageX + 10) + "px")            
+			.style("top", (d3.event.pageY - 28) + "px")}
+			)
+		.on("mouseout", function(d) {tooltip_div.style("opacity",0);});
 
 	// Add cases axis
 	svg.append("g")
@@ -57,14 +74,31 @@ function overview_plot() {
 	var death_max = Math.max.apply(Math,data.map(function(o) {return o.total_deaths}));
 	var ys2 = d3.scaleLinear().domain([0,death_max]).range([height,0]);
     svg.append("path")
-      .datum(data)
-      .attr("fill", "none")
-      .attr("stroke", "green")
-      .attr("stroke-width", 1.5)
-      .attr("d", d3.line()
-        .x(function(d) { return xs(d.index) })
-        .y(function(d) { return ys2(d.total_deaths) })
-        );
+		.datum(data)
+		.attr("fill", "none")
+		.attr("stroke", "green")
+		.attr("stroke-width", 1.5)
+		.attr("d", d3.line()
+			.x(function(d) { return xs(d.index) })
+			.y(function(d) { return ys2(d.total_deaths) })
+		)
+	
+    // Add the scatterplot
+    svg.selectAll("dot")	
+        .data(data)			
+    .enter().append("circle")								
+        .attr("r", 5)		
+        .attr("cx", function(d) { return xs(d.index); })		 
+        .attr("cy", function(d) { return ys2(d.total_deaths); })	
+		.attr("fill-opacity",0)
+		.attr("stroke","green")
+        .on("mouseover", function(d) {
+			tooltip_div.style("opacity", 1)
+			.text( "Date: " + dataFormatter(d.date_use) + "\nTotal Deaths: " + d.total_deaths )
+			.style("left", (d3.event.pageX + 10) + "px")            
+			.style("top", (d3.event.pageY - 28) + "px")}
+			)
+		.on("mouseout", function(d) {tooltip_div.style("opacity",0);});
 		
 		// add deaths axis
 	svg.append("g").attr("transform","translate("+width+",0)")
