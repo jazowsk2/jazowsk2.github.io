@@ -33,6 +33,13 @@ function transition_plot(slide_idx) {
 		.attr("height",height - ys(0))
 		.attr("width",xs.bandwidth())
 		.attr("y",function(d,i) {return ys(0);})
+		.on("mouseover", function(d) {
+			tooltip_div.style("opacity", 1)
+			.text( "Date: " + dataFormatter(d.date_use) + "\nDaily Cases: " + d.new_case )
+			.style("left", (d3.event.pageX + 10) + "px")            
+			.style("top", (d3.event.pageY - 28) + "px")}
+			)
+		.on("mouseout", function(d) {tooltip_div.style("opacity",0);})
 		.transition().delay(function(d,i) {return i*(1500/data2.length);})
 		.attr("x",function (d,i) {return xs(d.index);})
 		.attr("height",function(d,i) {return height - ys(d.new_case);})
@@ -55,12 +62,12 @@ function transition_plot(slide_idx) {
 	// Add the scatterplot
     svg.selectAll("dot")	
         .data(data1)			
-    .enter().append("circle")								
-        .attr("r", 5)		
-        .attr("cx", function(d) { return xs(d.index); })		 
-        .attr("cy", function(d) { return ys(d.avg_cases); })	
+		.enter().append("circle")	
+        .attr("r", 5)
 		.attr("fill-opacity",0)
 		.attr("stroke","black")
+        .attr("cx", function(d) { return xs(d.index); })		 
+        .attr("cy", function(d) { return ys(d.avg_cases); })
         .on("mouseover", function(d) {
 			tooltip_div.style("opacity", 1)
 			.text( "Date: " + dataFormatter(d.date_use) + "\nDaily Avg Cases: " + d.avg_cases )
@@ -69,21 +76,29 @@ function transition_plot(slide_idx) {
 			)
 		.on("mouseout", function(d) {tooltip_div.style("opacity",0);});
 		
-	// plot new data with transition
-    svg.append("path")
-		.datum(data2)
-        .attr("fill", "none")
-        .attr("stroke", "black")
-        .attr("stroke-width", 1.5)
-        .attr("d", d3.line()
-			.x(xs(data2[0].index))
-			.y(ys(data2[0].avg_cases))
-        )
-		.transition().duration(2000)
-	    .attr("d", d3.line()
+	// TODO functionify
+	var line_gen = d3.line()
 			.x(function(d,i) {return xs(d.index); })
-			.y(function(d,i) {return ys(d.avg_cases); })
-        );
+			.y(function(d,i) {return ys(d.avg_cases); });
+	var temp_data2 = [];
+	for(var i = 0; i < data2.length - 1; i++)
+	{
+		temp_data2.push(line_gen([data2[i],data2[i+1]]));
+	}
+	// plot new data with transition
+	// need to loop over adding the path because its a unique case
+	for (var i = 0; i < temp_data2.length; i++) {
+		svg.append("path")
+			.datum(temp_data2[i])
+			.attr("fill", "none")
+			.attr("stroke", "black")
+			.attr("stroke-width", 1.5)
+			.attr("opacity",0)
+			.attr("d", temp_data2[i])
+			.transition().delay(i*(1500/data2.length))
+			.attr("opacity",1)
+	}
+		
 
 	// Add the scatterplot
     svg.selectAll("dot")	
@@ -92,6 +107,7 @@ function transition_plot(slide_idx) {
         .attr("r", 5)		
         .attr("cx", function(d) { return xs(d.index); })		 
         .attr("cy", function(d) { return ys(d.avg_cases); })	
+		.attr("opacity",0)
 		.attr("fill-opacity",0)
 		.attr("stroke","black")
         .on("mouseover", function(d) {
@@ -100,7 +116,9 @@ function transition_plot(slide_idx) {
 			.style("left", (d3.event.pageX + 10) + "px")            
 			.style("top", (d3.event.pageY - 28) + "px")}
 			)
-		.on("mouseout", function(d) {tooltip_div.style("opacity",0);});
+		.on("mouseout", function(d) {tooltip_div.style("opacity",0);})
+		.transition().delay(function(d,i) {return i*(1500/data2.length);})
+		.attr("opacity",1);
 		
 	// Add X axis --> it is a date format
     var x = d3.scaleTime()
@@ -140,29 +158,36 @@ function transition_plot(slide_idx) {
 			.style("top", (d3.event.pageY - 28) + "px")}
 			)
 		.on("mouseout", function(d) {tooltip_div.style("opacity",0);});
-		
+	
+	var line_gen = d3.line()
+			.x(function(d,i) {return xs(d.index); })
+			.y(function(d,i) {return ys2(d.avg_deaths); });
+	var temp_data2 = [];
+	for(var i = 0; i < data2.length - 1; i++)
+	{
+		temp_data2.push(line_gen([data2[i],data2[i+1]]));
+	}
+
 	// plot new data with transition
-    svg.append("path")
-      .datum(data2)
-      .attr("fill", "none")
-      .attr("stroke", "green")
-      .attr("stroke-width", 1.5)
-	  .attr("d", d3.line()
-        .x(xs(data2[0].index)) 
-        .y(ys2(data2[0].avg_deaths))
-        )
-	  .transition().duration(2000)
-      .attr("d", d3.line()
-        .x(function(d,i) {return xs(d.index) }) 
-        .y(function(d,i) {return ys2(d.avg_deaths) })
-        );	
+	for (var i = 0; i < temp_data2.length; i++) {
+		svg.append("path")
+			.datum(temp_data2[i])
+			.attr("fill", "none")
+			.attr("stroke", "green")
+			.attr("stroke-width", 1.5)
+			.attr("opacity",0)
+			.attr("d", temp_data2[i])
+			.transition().delay(i*(1500/data2.length))
+			.attr("opacity",1)
+	}
 		
     svg.selectAll("dot")	
         .data(data2)			
     .enter().append("circle")								
         .attr("r", 5)		
-        .attr("cx", function(d) { return xs(d.index); })		 
-        .attr("cy", function(d) { return ys2(d.avg_deaths); })	
+        .attr("cx", function(d) { return xs(d.index); }) 
+        .attr("cy", function(d) { return ys2(d.avg_deaths); })
+		.attr("opacity",0)
 		.attr("fill-opacity",0)
 		.attr("stroke","green")
         .on("mouseover", function(d) {
@@ -171,8 +196,9 @@ function transition_plot(slide_idx) {
 			.style("left", (d3.event.pageX + 10) + "px")            
 			.style("top", (d3.event.pageY - 28) + "px")}
 			)
-		.on("mouseout", function(d) {tooltip_div.style("opacity",0);});
-		
+		.on("mouseout", function(d) {tooltip_div.style("opacity",0);})
+		.transition().delay(function(d,i) {return i*(1500/data2.length);})
+		.attr("opacity",1);
 	// add deaths axis
 	svg.append("g").attr("transform","translate("+width+",0)")
 		.call(d3.axisRight(ys2).tickValues(getTicks(0,death_max,5)).tickFormat(d3.format("~s")));
@@ -274,6 +300,12 @@ function transition_plot(slide_idx) {
 	}	
 }
 
+// function that takes in data array and returns a path array
+function buildPath(data) {
+var line_gen = d3.line()
+			.x(function(d,i) {return xs(d.index); })
+			.y(function(d,i) {return ys(d.avg_cases); });
+}
 // function that extracts data between two points
 function extractData(start_date,end_date) {
 	var temp_data = [];
