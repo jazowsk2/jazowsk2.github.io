@@ -6,6 +6,8 @@ function state_machine(idx) {
 	if (parseInt(idx) != slide_num) {
 		// clear svg element
 		svg.selectAll('*').remove();
+		
+		highlight_current_button(idx);
 			
 		switch(idx) {
 		  case 0:
@@ -41,6 +43,31 @@ function state_machine(idx) {
 	set_next_button();	
 }
 
+// set the current button color so user knows what slide they are on
+function highlight_current_button(idx) {
+	switch(idx) {
+		  case 0:
+			document.getElementsByTagName("button").bgcolor = "light-gray";
+			document.getElementById("button_1").focus();
+			break;
+		  case 1:
+			document.getElementsByTagName("button").bgcolor = "light-gray";
+			document.getElementById("button_2").focus()
+			break;
+		  case 2:
+			document.getElementsByTagName("button").bgcolor = "light-gray";
+			document.getElementById("button_3").focus()
+			break;
+		  case 3:
+			document.getElementsByTagName("button").bgcolor = "light-gray";
+			document.getElementById("button_4").focus()
+			break;
+		  case 4:
+			document.getElementsByTagName("button").bgcolor = "light-gray";
+			document.getElementById("button_5").focus()
+			break;
+	}
+}
 // event callback for next_button
 function increment_slide_num() {
 	// if less then the max slide number, increment and update the plot
