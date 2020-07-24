@@ -47,23 +47,18 @@ function state_machine(idx) {
 function highlight_current_button(idx) {
 	switch(idx) {
 		  case 0:
-			document.getElementsByTagName("button").bgcolor = "light-gray";
 			document.getElementById("button_1").focus();
 			break;
 		  case 1:
-			document.getElementsByTagName("button").bgcolor = "light-gray";
 			document.getElementById("button_2").focus()
 			break;
 		  case 2:
-			document.getElementsByTagName("button").bgcolor = "light-gray";
 			document.getElementById("button_3").focus()
 			break;
 		  case 3:
-			document.getElementsByTagName("button").bgcolor = "light-gray";
 			document.getElementById("button_4").focus()
 			break;
 		  case 4:
-			document.getElementsByTagName("button").bgcolor = "light-gray";
 			document.getElementById("button_5").focus()
 			break;
 	}
