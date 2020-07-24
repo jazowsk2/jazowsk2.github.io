@@ -92,13 +92,8 @@ function overview_plot() {
         .attr("cy", function(d) { return ys2(d.total_deaths); })	
 		.attr("fill-opacity",0)
 		.attr("stroke","green")
-        .on("mouseover", function(d) {
-			tooltip_div.style("opacity", 1)
-			.text( "Date: " + dataFormatter(d.date_use) + "\nTotal Deaths: " + d.total_deaths )
-			.style("left", (d3.event.pageX + 10) + "px")            
-			.style("top", (d3.event.pageY - 28) + "px")}
-			)
-		.on("mouseout", function(d) {tooltip_div.style("opacity",0);});
+        .on("mouseover", showTooltip)
+		.on("mouseout", removeTooltip);
 		
 		// add deaths axis
 	svg.append("g").attr("transform","translate("+width+",0)")
@@ -168,6 +163,27 @@ function overview_plot() {
         .attr("font-size", "18px")
         .style("text-anchor", "middle")
         .text("Total deaths");
+		
+	// add textbox explaning tooltip
+	svg.append("text") 
+		.attr("x", width/2)
+		.attr("y",  height/4)
+		.style("text-anchor", "middle")
+		.style("background", "lightsteelblue")
+		.attr("font-family", "serif")
+		.attr("font-size", "14px")
+		.text("Hover over data for details");
+}
+
+// callback function on mouseout to remove tooltip
+function removeTooltip(d) {tooltip_div.style("opacity",0);}
+
+// callback function on mouseover to add tooltip
+function showTooltip(d) {
+	tooltip_div.style("opacity", 1)
+	.text( "Date: " + dataFormatter(d.date_use) + "\nTotal Deaths: " + d.total_deaths )
+	.style("left", (d3.event.pageX + 10) + "px")            
+	.style("top", (d3.event.pageY - 28) + "px")
 }
 // function that returns evenly spaced tick values 
 // between min and max, and amount cnt

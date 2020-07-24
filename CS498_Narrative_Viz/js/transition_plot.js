@@ -19,13 +19,8 @@ function transition_plot(slide_idx) {
 		.attr("height",function(d,i) {return height - ys(d.new_case);})
 		.attr("width",xs.bandwidth())
 		.attr("y",function(d,i) {return ys(d.new_case);})
-        .on("mouseover", function(d) {
-			tooltip_div.style("opacity", 1)
-			.text( "Date: " + dataFormatter(d.date_use) + "\nDaily Cases: " + d.new_case )
-			.style("left", (d3.event.pageX + 10) + "px")            
-			.style("top", (d3.event.pageY - 28) + "px")}
-			)
-		.on("mouseout", function(d) {tooltip_div.style("opacity",0);});
+        .on("mouseover", showTooltipCase)
+		.on("mouseout", removeTooltip);
 	// plot the new data with transition
 	svg.append("g")
 		.selectAll("rect").data(data2).enter().append("rect")
@@ -33,13 +28,8 @@ function transition_plot(slide_idx) {
 		.attr("height",height - ys(0))
 		.attr("width",xs.bandwidth())
 		.attr("y",function(d,i) {return ys(0);})
-		.on("mouseover", function(d) {
-			tooltip_div.style("opacity", 1)
-			.text( "Date: " + dataFormatter(d.date_use) + "\nDaily Cases: " + d.new_case )
-			.style("left", (d3.event.pageX + 10) + "px")            
-			.style("top", (d3.event.pageY - 28) + "px")}
-			)
-		.on("mouseout", function(d) {tooltip_div.style("opacity",0);})
+		.on("mouseover", showTooltipCase)
+		.on("mouseout", removeTooltip)
 		.transition().delay(function(d,i) {return i*(1500/data2.length);})
 		.attr("x",function (d,i) {return xs(d.index);})
 		.attr("height",function(d,i) {return height - ys(d.new_case);})
@@ -68,13 +58,8 @@ function transition_plot(slide_idx) {
 		.attr("stroke","black")
         .attr("cx", function(d) { return xs(d.index); })		 
         .attr("cy", function(d) { return ys(d.avg_cases); })
-        .on("mouseover", function(d) {
-			tooltip_div.style("opacity", 1)
-			.text( "Date: " + dataFormatter(d.date_use) + "\nDaily Avg Cases: " + d.avg_cases )
-			.style("left", (d3.event.pageX + 10) + "px")            
-			.style("top", (d3.event.pageY - 28) + "px")}
-			)
-		.on("mouseout", function(d) {tooltip_div.style("opacity",0);});
+        .on("mouseover", showTooltipAvgCase)
+		.on("mouseout", removeTooltip);
 		
 	// TODO functionify
 	var line_gen = d3.line()
@@ -110,13 +95,8 @@ function transition_plot(slide_idx) {
 		.attr("opacity",0)
 		.attr("fill-opacity",0)
 		.attr("stroke","black")
-        .on("mouseover", function(d) {
-			tooltip_div.style("opacity", 1)
-			.text( "Date: " + dataFormatter(d.date_use) + "\nDaily Avg Cases: " + d.avg_cases )
-			.style("left", (d3.event.pageX + 10) + "px")            
-			.style("top", (d3.event.pageY - 28) + "px")}
-			)
-		.on("mouseout", function(d) {tooltip_div.style("opacity",0);})
+        .on("mouseover", showTooltipAvgCase)
+		.on("mouseout", removeTooltip)
 		.transition().delay(function(d,i) {return i*(1500/data2.length);})
 		.attr("opacity",1);
 		
@@ -151,13 +131,8 @@ function transition_plot(slide_idx) {
         .attr("cy", function(d) { return ys2(d.avg_deaths); })	
 		.attr("fill-opacity",0)
 		.attr("stroke","green")
-        .on("mouseover", function(d) {
-			tooltip_div.style("opacity", 1)
-			.text( "Date: " + dataFormatter(d.date_use) + "\nDaily Avg Deaths: " + d.avg_deaths )
-			.style("left", (d3.event.pageX + 10) + "px")            
-			.style("top", (d3.event.pageY - 28) + "px")}
-			)
-		.on("mouseout", function(d) {tooltip_div.style("opacity",0);});
+        .on("mouseover", showTooltipAvgDeath)
+		.on("mouseout", removeTooltip);
 	
 	var line_gen = d3.line()
 			.x(function(d,i) {return xs(d.index); })
@@ -190,13 +165,8 @@ function transition_plot(slide_idx) {
 		.attr("opacity",0)
 		.attr("fill-opacity",0)
 		.attr("stroke","green")
-        .on("mouseover", function(d) {
-			tooltip_div.style("opacity", 1)
-			.text( "Date: " + dataFormatter(d.date_use) + "\nDaily Avg Deaths: " + d.avg_deaths )
-			.style("left", (d3.event.pageX + 10) + "px")            
-			.style("top", (d3.event.pageY - 28) + "px")}
-			)
-		.on("mouseout", function(d) {tooltip_div.style("opacity",0);})
+        .on("mouseover", showTooltipAvgDeath)
+		.on("mouseout", removeTooltip)
 		.transition().delay(function(d,i) {return i*(1500/data2.length);})
 		.attr("opacity",1);
 	// add deaths axis
@@ -300,6 +270,28 @@ function transition_plot(slide_idx) {
 	}	
 }
 
+// callback function on mouseout to remove tooltip
+function removeTooltip(d) {tooltip_div.style("opacity",0);}
+
+// callback function on mouseover to add tooltip
+function showTooltipCase(d) {
+	tooltip_div.style("opacity", 1)
+		.text( "Date: " + dataFormatter(d.date_use) + "\nDaily Cases: " + d.new_case )
+		.style("left", (d3.event.pageX + 10) + "px")            
+		.style("top", (d3.event.pageY - 28) + "px")
+}
+function showTooltipAvgCase(d) {
+	tooltip_div.style("opacity", 1)
+		.text( "Date: " + dataFormatter(d.date_use) + "\nDaily Avg Cases: " + d.avg_cases )
+		.style("left", (d3.event.pageX + 10) + "px")            
+		.style("top", (d3.event.pageY - 28) + "px")
+}
+function showTooltipAvgDeath(d) {
+	tooltip_div.style("opacity", 1)
+		.text( "Date: " + dataFormatter(d.date_use) + "\nDaily Avg Deaths: " + d.avg_deaths )
+		.style("left", (d3.event.pageX + 10) + "px")            
+		.style("top", (d3.event.pageY - 28) + "px")
+}
 // function that takes in data array and returns a path array
 function buildPath(data) {
 var line_gen = d3.line()
