@@ -28,7 +28,7 @@ var header = ["Continuous Growth",
 			 "The Reopening",
 			 "The Present"];
 
-var text = ["The cumulative number of cases and deaths \
+var text = ["The total number of cases and deaths \
 			has been increasing steadily since the beginning of the Covid-19 outbreak. \
 			Taking a look at daily statistics will tell us how we got here.",
 			"As new cases and deaths began to grow \

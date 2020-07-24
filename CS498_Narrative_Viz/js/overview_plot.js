@@ -157,7 +157,7 @@ function overview_plot() {
 		.attr("font-family", "serif")
         .attr("font-size", "18px")
         .style("text-anchor", "middle")
-        .text("Cumulative cases");
+        .text("Total cases");
 		
 	svg.append("text")
         .attr("transform", "rotate(-90)")
@@ -167,7 +167,7 @@ function overview_plot() {
 		.attr("font-family", "serif")
         .attr("font-size", "18px")
         .style("text-anchor", "middle")
-        .text("Cumulative deaths");
+        .text("Total deaths");
 }
 // function that returns evenly spaced tick values 
 // between min and max, and amount cnt
