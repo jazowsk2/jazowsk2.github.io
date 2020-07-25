@@ -45,4 +45,4 @@ var text = ["The total number of cases and deaths \
 var annotations = [{label: "Stay at home order", y: 100},
 					{label: "New Cases Peak and Plateau", y: 100},
 					{label: "Beginning of reopening", y: 150}];
-		
+				

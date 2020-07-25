@@ -1,7 +1,6 @@
 button {
   vertical-align: top;
-  background-color: light-blue;
-  /*transition-duration: 0.4s;*/
+  background-color: light-gray;
   font-weight: normal;
 }
 button:hover {

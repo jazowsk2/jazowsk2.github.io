@@ -63,6 +63,10 @@ function highlight_current_button(idx) {
 			break;
 	}
 }
+
+// always check if a click occurs and set the button focus, otherwise you lose what slide you were on
+document.addEventListener("click", function () {highlight_current_button(slide_num);});
+
 // event callback for next_button
 function increment_slide_num() {
 	// if less then the max slide number, increment and update the plot
