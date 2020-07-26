@@ -23,23 +23,23 @@ var dates = ["3/1/2020","3/15/2020","5/1/2020","5/15/2020","present"];
 
 // string arrays containing text and headers for each slide_num
 var header = ["Continuous Growth",
-			 "The Beginning",
+			 "The Bad Beginning",
 			 "The Plateau",
 			 "The Reopening",
 			 "The Present"];
 
 var text = ["The total number of cases and deaths \
-			has been increasing steadily since the beginning of the Covid-19 outbreak. \
-			Taking a look at daily statistics will tell us how we got here.",
+			has been steadily increasing since the beginning of the COVID-19 outbreak. \
+			In the subsequent slides, we will assess daily statistics at different stages of the Los Angeles County response plan.",
 			"As new cases and deaths began to grow \
-			without any hope of stopping the spread, LA county officials enacted a stay at home order.",
+			without any hope of stopping the spread, Los Angeles County officials enacted a stay at home order.",
 			"The stay at home order proved effective, and once cases peaked \
 			and started to plateau, discussions about reopening began.",
 			"With deaths decreasing and cases mostly steady, \
-			LA county began to reopen.",
+			Los Angeles County began to reopen in phases.",
 			"Although cases have been increasing since reopening, deaths have continued \
-			to decrease meaning the current reopening strategy is mostly successful. However, LA county officials need to continue \
-			closely monitoring the situation to maintain control of spread and prevent an increase in deaths."];
+			to decrease meaning the current reopening strategy has been mostly successful. However, Los Angeles County officials need to continue \
+			monitoring the situation to maintain control over the spread and prevent an increase in deaths."];
 
 // annotation label and y offset
 var annotations = [{label: "Stay at home order", y: 100},
